@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator BMI</title>
+    <link rel='stylesheet' href="main.css">
+</head>
+<body>
+    <header>Kalkulator BMI</header>
+    <section>
+        <div>
+            <form action=''>
+                    <input class='weight' type='number' placeholder="Podaj swoją wagę w kg" onfocus="this.placeholder=''" onblur="this.placeholder='Podaj swoją wagę'"></label>
+                    <input class='height' type='number' placeholder="Podaj swój wzrost w cm" onfocus="this.placeholder=''" onblur="this.placeholder='Podaj swój wzrost'"></label>               
+                    <input class='button' type='submit' value="Zatwierdź">
+            </form>
+        </div>
+        <div class='middle'>
+            <p>Twoje BMI ...</p>
+            <p>Wzrost: </p>
+            <p>Waga: </p>
+            <p>Wyliczone BMI: </p>
+        </div>
+        <div class='right'>
+            <h2>Historia wpisów:</h2>
+            <ul>
+                <div class='storage'></div>
+            </ul>
+            <p>Średnie BMI: </p>
+            <input class='button' type='hidden' value='Wyczyść historię'>
+        </div>
+    </section>
+    <script src='main.js'></script>
+</body>
+</html>
