@@ -2,7 +2,6 @@ const height = document.querySelector('.height');
 const weight = document.querySelector('.weight');
 const btn = document.querySelector('.button');
 const ul = document.querySelector('ul');
-const divStorage = document.querySelector('.storage');
 const clearBtn = document.querySelector('div.right input');
 const yourHeight = document.querySelector('.middle p:nth-child(2)');
 const yourWeight = document.querySelector('.middle p:nth-child(3)');
@@ -30,8 +29,8 @@ function countBmi(e) {
     yourHeight.textContent = `Twój wzrost to ${givenHeight} cm`;
     yourWeight.textContent = `Twója waga to ${givenWeight} kg`;
     bmiCount.textContent = `Wyliczone BMI: ${bmi}`;
-    const registration = document.createElement('li');
-    registration.className = 'reg';
+    const registration = document.createElement('div');
+    registration.className = 'shownHistory';
     registration.dataset.key = historyIndex +=1;
     let time = clock()
     registration.innerHTML = `Pomiar: ${historyCount} z ${time}`;
@@ -60,20 +59,12 @@ function clock () {
     return `${days}.${month}.${year} ${hours}:${minutes}:${seconds}`;
 }
 
-function toString(obj) {
-    return Object.entries(obj).map(([k, v]) => `${k}: ${v}`).join(', ');
-}
-
 function showHistory(e) {
     let index = e.target.dataset.key;
-    const div = document.createElement('div');
-    div.className = 'shownHistory';
-    let date = toString(history[index-1]);
-    let dateArray = date.split(',');
-    div.textContent = dateArray[2] + ',' + dateArray[3] + ',' + dateArray[4];
-    ul.appendChild(div);  
-    document.querySelectorAll('.shownHistory').forEach(item => item.addEventListener('click', removeHistory));
-}
+    yourHeight.textContent = `Twój wzrost to ${history[index].Wzrost} cm`; 
+    yourWeight.textContent = `Twója waga to ${history[index].Waga} kg`; 
+    bmiCount.textContent = `Wyliczone BMI ${history[index].WynikBMI}`; 
+  }
 
 const bmiComparison = () => {
     let yourBmi = document.querySelector('.middle p:nth-child(1)');
@@ -98,28 +89,27 @@ const averageBmi = () => {
     allAverageBmi = allAverage / history.length;
 }
 
-const removeHistory = (e) => {
-    e.target.remove();
-}
-
 const historyStorage = () => {
     sessionStorage.setItem('history', JSON.stringify(history));
 }
 
 const getStorage = () => {
-    if(history !== null) {
-        for(let i = 0; i < history.length; i++) {
-        const div = document.createElement('div')
-        div.className = 'shownHistory';
-        div.textContent = toString(history[i]);
+    if (history !== null) {
+      for (let i = 0; i < history.length; i++) {
+        const div = document.createElement("div");
+        div.className = "shownHistory";
+        div.dataset.key = historyIndex;
+        historyIndex++;
+        div.textContent = `Pomiar: ${history[i].Pomiar} z ${history[i].Czas}`;  
         ul.appendChild(div);
-        clearBtn.setAttribute('type', 'submit');
+        clearBtn.setAttribute("type", "submit");
+      }
+      historyCount = history.length + 1;
+      historyIndex = history.length - 1;
+      document.querySelector('.middle p:nth-child(1)').textContent = 'Historia BMI';
+      document.querySelector('.right p').textContent = '';
     }
-    historyCount = history.length+1;
-    averageBmi();
-    document.querySelector('.right p').textContent = `Średnie BMI: ${'NaN' ? "" : allAverageBmi.toFixed(2)}`;
-}
-}
+};
 
 getStorage();
 

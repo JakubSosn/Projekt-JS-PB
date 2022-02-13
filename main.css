@@ -95,6 +95,7 @@ h2 {
 .shownHistory {
     font-size: 25px;
     margin-top: 5px;
+    cursor: pointer;
 }
 
 .right p {
